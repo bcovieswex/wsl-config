@@ -1,0 +1,25 @@
+---
+- name: Download NvChad to nvim
+  hosts: localhost
+  tasks:
+    # - name: Clone the repository
+    #   git:
+    #     repo: 'https://github.com/NvChad/starter'
+    #     dest: /home/dev/.config/nvim
+    #     version: 'main'  
+
+    # - name: Delete the git folder
+    #   file:
+    #     path: /home/dev/.config/nvim/.git
+    #     state: absent
+    
+    - name: Update the package list
+      apt:
+        update_cache: yes
+
+    - name: Install build-essential
+      apt:
+        name: 
+          - build-essential
+          - unzip
+        state: present

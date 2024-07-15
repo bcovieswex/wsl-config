@@ -1,0 +1,26 @@
+---
+- name: Download NeoVim binary from GitHub
+  hosts: localhost
+  tasks:
+    - name: Ensure the destination directory exists
+      file:
+        path: /opt/nvim
+        state: directory
+
+    - name: Download the binary
+      get_url:
+        url: "https://github.com/neovim/neovim/releases/download/v0.10.0/nvim-linux64.tar.gz"
+        dest: "/opt/nvim-linux64.tar.gz"
+        mode: '0755'
+
+    - name: Extract the tarball
+      ansible.builtin.unarchive:
+        src: "/opt/nvim-linux64.tar.gz"
+        dest: "/opt/nvim"
+        remote_src: yes
+
+    - name: Create a symbolic link to the binary
+      ansible.builtin.file:
+        src: "/opt/nvim/nvim-linux64/bin/nvim"
+        dest: "/usr/local/bin/nvim"
+        state: link
